@@ -1,9 +1,16 @@
 # README
 
+TODO
+
 
 ## Dependencies
 
-`asdf install ruby 3.3.0`
+TODO: These so far: 
+
+1. ruby
+2. a github API key (todo resolve this dependency)
+
 
 ## Usage
 
+Toodles
