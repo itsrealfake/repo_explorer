@@ -1,7 +1,8 @@
 # README
 
 TODO
-
+hello world
+running git
 
 ## Dependencies
 
