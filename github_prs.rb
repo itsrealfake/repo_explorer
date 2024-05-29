@@ -17,7 +17,7 @@ require 'json'
 require 'net/http'
 require 'uri'
 require 'csv'
-require 'pry'
+# require 'pry'
 # require 'optparse' TODO: use this to parse the args
 
 
