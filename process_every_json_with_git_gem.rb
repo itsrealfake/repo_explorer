@@ -6,6 +6,13 @@
 require 'pry'
 require 'json'
 require 'date'
+require 'git'
+
+Git.configure do |config|
+  config.binary_path = '/opt/homebrew/bin/git'
+end
+
+
 
 json_dir_path = ARGV[0]
 
@@ -112,10 +119,11 @@ end
 
 breakdown = CommitsBreakdown.new(all_commits)
 
+
+
 puts "Total commits: #{breakdown.total_commits_for_all_years}"
 
 breakdown.hash_of_all_years.each do |key, value|
   puts "#{key} had #{value['total_commits_this_year']} commits"
 end
 
-binding.pry
