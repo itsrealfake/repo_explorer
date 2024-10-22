@@ -57,12 +57,20 @@ https://stackoverflow.com/questions/18750808/difference-between-author-and-commi
 
 
 ## Dependencies
+
+TODO: These so far: 
+
+1. ruby
+2. a github API key (todo resolve this dependency)
+3. [git](https://github.com/ruby-git/ruby-git) gem (gem install git)
+
 ## Road Map
 - V1:  proof of concept, static site
 - v2: explorable site
 - v3: bitcoin repo expansions? 
 
-TODO: These so far: 
 ## Usage
 
 Toodles
+
+

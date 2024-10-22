@@ -52,17 +52,17 @@ end
 
 # Open every JSON file from the original scraped data
 # create a new CommitEntry from each commit
-# Dir.each_child(json_dir_path) do |entry_name|
-#   next if entry_name.include?('headers')
-#   file = File.open("#{json_dir_path}/#{entry_name}")
-#   contents = file.read
-#   data = JSON.parse(contents)
+Dir.each_child(json_dir_path) do |entry_name|
+  next if entry_name.include?('headers')
+  file = File.open("#{json_dir_path}/#{entry_name}")
+  contents = file.read
+  data = JSON.parse(contents)
 
-#   data.each do |commit|
-#     all_commits << CommitEntry.new(commit)
-#   end
+  data.each do |commit|
+    all_commits << CommitEntry.new(commit)
+  end
 
-# end
+end
 
 class CommitsBreakdown
   attr_reader :hash_of_all_years, :total_commits_for_all_years
@@ -109,22 +109,6 @@ class CommitsBreakdown
       puts "#{commit_author} has #{hash_of_all_years[commit_year][commit_author] } commits for #{commit_year}"
   end
 end
-
-
-
-
-require 'git'
-bitcoin_dir = Dir.new('~/code/bitcoin')
-b = Git.open(
-  bitcoin_dir
-  # ,  log: Logger.new(STDOUT)
-)
-
-all_commits = b.log(:all)
-
-
-
-
 
 breakdown = CommitsBreakdown.new(all_commits)
 
