@@ -43,18 +43,15 @@ def iterate_over_n_rows(csv_file, start_row = 1, end_row = -1)
 
   # Output the contributor name and number of commits along with the percentage of total commits.
   CSV.open('test.csv', "a+") do |csv|
-	total_percent = 0
-	commits_by_contributor.each do |contributor, commits|
+    total_percent = 0
+    commits_by_contributor.each do |contributor, commits|
 	  # the percentage of total commits
-	  percentage_of_total_commits = (commits.to_f / commits_by_contributor.values.sum.to_f * 100.0).round(2)
-	  total_percent += percentage_of_total_commits
-	  csv << [contributor, ' ' ,commits,  " #{percentage_of_total_commits}%"]
-	end
-	csv << [ 'Total %', total_percent, 'Total Commits', commits_by_contributor.values.sum.to_f]
+      percentage_of_total_commits = (commits.to_f / commits_by_contributor.values.sum.to_f * 100.0).round(2)
+      total_percent += percentage_of_total_commits
+      csv << [contributor, ' ', commits, " #{percentage_of_total_commits}%"]
+    end
+    csv << ['Total %', total_percent, 'Total Commits', commits_by_contributor.values.sum.to_f]
   end
-
-
-
 end
 
 # Example callback function for processing a row (currently not used).

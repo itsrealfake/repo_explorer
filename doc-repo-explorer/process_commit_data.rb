@@ -18,7 +18,7 @@ require 'csv'
 class Arguments
   attr_reader :repo_name, :output_file_name, :page_number, :github_api_token
   def initialize
-    @output_file_name  = ARGV[1]
+    @output_file_name = ARGV[1]
     check_for_all_arguments
     print_execution_message
   end
@@ -41,16 +41,16 @@ class CsvHandler
   attr_reader :csv_name
 
   def initialize(csv_name, headers)
-      @csv_name = csv_name
-      @headers = headers
-      check_or_create_file
+    @csv_name = csv_name
+    @headers = headers
+    check_or_create_file
   end
 
   # Adds a row to the CSV file.
   def add_row_to_csv(row)
-      CSV.open(@csv_name, "a+") do |csv|
-            csv << row
-      end
+    CSV.open(@csv_name, "a+") do |csv|
+      csv << row
+    end
   end
 
   private
@@ -59,31 +59,31 @@ class CsvHandler
   def check_or_create_file
       # if the file exists, print a message
       # else create the file
-      if File.exist?(@csv_name)
-          puts "File #{@csv_name} already exists"
-      else
-          initialize_csv_headers
-          print_creation_message
-      end
+    if File.exist?(@csv_name)
+      puts "File #{@csv_name} already exists"
+    else
+      initialize_csv_headers
+      print_creation_message
+    end
   end
 
   # Prints a message indicating the creation of the CSV file.
   def print_creation_message
-      puts "Created file #{@csv_name}"
+    puts "Created file #{@csv_name}"
   end
 
   # Initializes the headers of the CSV file.
   def initialize_csv_headers
       puts "initializing csv headers: #{@headers}"
-      CSV.open(@csv_name, "a+") do |csv|
-          csv << [*@headers]
-      end
+    CSV.open(@csv_name, "a+") do |csv|
+      csv << [*@headers]
+    end
   end
 end
 
 # Extracts the entire commit message from the commit response.
 def entire_commit_message(commit_response)
-    commit_response.dig('commit','message')
+  commit_response.dig('commit', 'message')
 end
 
 # Determines if a commit may be a self-merge commit.
@@ -286,6 +286,4 @@ Dir.each_child(json_dir_path) do |entry_name|
   data.each do |commit_response|
     csv.add_row_to_csv(details_from_commit_response(commit_response))
   end
-
 end
-

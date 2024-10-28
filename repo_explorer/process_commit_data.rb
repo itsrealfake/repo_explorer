@@ -1,11 +1,6 @@
 #!/usr/bin/env ruby
 
-# This script will read every JSON file in the specified directory and provide a CSV file with commit data.
-#
-# Usage:
-# ruby process_commit_data.rb <json_directory_path> <output_file_name>
-#
-# Example:
+# example
 # ruby process_commit_data.rb all_core_repo_commits_2023_12_08/commits_in_json all_commit_re-process_Mar_26_dingo.csv
 
 # this script will read every json file in the directory and provide a CSV file
@@ -14,7 +9,7 @@ require 'date'
 require 'pry'
 require 'csv'
 
-# Class for handling the arguments passed to the script.
+# class for the arguments
 class Arguments
   attr_reader :repo_name, :output_file_name, :page_number, :github_api_token
   def initialize
@@ -25,28 +20,25 @@ class Arguments
 
   private
 
-  # Checks if all required arguments are provided.
   def check_for_all_arguments
     raise ArgumentError.new("Please provide an output file name") unless output_file_name
   end
 
-  # Prints a message indicating the script's action.
   def print_execution_message
     puts "Searching for pull requests on #{@repo_name} and saving to #{@output_file_name}"
   end
 end
 
-# Class to handle CSV file operations.
+
+# class to handle the csv file
 class CsvHandler
   attr_reader :csv_name
-
   def initialize(csv_name, headers)
       @csv_name = csv_name
       @headers = headers
       check_or_create_file
   end
 
-  # Adds a row to the CSV file.
   def add_row_to_csv(row)
       CSV.open(@csv_name, "a+") do |csv|
             csv << row
@@ -55,7 +47,6 @@ class CsvHandler
 
   private
 
-  # Checks if the CSV file exists, creates it if not, and initializes headers.
   def check_or_create_file
       # if the file exists, print a message
       # else create the file
@@ -67,12 +58,10 @@ class CsvHandler
       end
   end
 
-  # Prints a message indicating the creation of the CSV file.
   def print_creation_message
       puts "Created file #{@csv_name}"
   end
 
-  # Initializes the headers of the CSV file.
   def initialize_csv_headers
       puts "initializing csv headers: #{@headers}"
       CSV.open(@csv_name, "a+") do |csv|
@@ -81,12 +70,11 @@ class CsvHandler
   end
 end
 
-# Extracts the entire commit message from the commit response.
 def entire_commit_message(commit_response)
     commit_response.dig('commit','message')
 end
 
-# Determines if a commit may be a self-merge commit.
+
 # TODO figure out if this is a self_merge commit
 def may_be_self_merge(commit_response, is_merge_commit)
     #  if this is not a merge commit, then return false
@@ -245,7 +233,7 @@ args = Arguments.new
 json_dir_path = ARGV[0]
 output_file_name = args.output_file_name
 
-# Create a CSV file and add the headers.
+# create a CSV file and add the headers
 commits_csv_headers = [
     'commit_sha'  ,
     'commit_node_id'  ,

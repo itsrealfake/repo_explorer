@@ -37,7 +37,6 @@ class CommitEntry
     @sha = data['sha']
     parse_dates
     get_logins
-
   end
 
   private
@@ -50,8 +49,8 @@ class CommitEntry
 
   # Parses the author and committer dates from the commit data.
   def parse_dates
-    author_date_str = data.dig('commit','author', 'date')
-    committed_date_str =  data.dig('commit','committer', 'date')
+    author_date_str = data.dig('commit', 'author', 'date')
+    committed_date_str = data.dig('commit', 'committer', 'date')
 
     @author_date = parse_date(author_date_str)
     @committed_date = parse_date(committed_date_str)
@@ -65,17 +64,17 @@ class CommitEntry
   end
 end
 
-# Open every JSON file from the original scraped data
-# create a new CommitEntry from each commit
-# Dir.each_child(json_dir_path) do |entry_name|
-#   next if entry_name.include?('headers')
-#   file = File.open("#{json_dir_path}/#{entry_name}")
-#   contents = file.read
-#   data = JSON.parse(contents)
+# Open every JSON file from the specified directory (original scraped data) and create a new CommitEntry from each commit.
+Dir.each_child(json_dir_path) do |entry_name|
+  next if entry_name.include?('headers')
+  file = File.open("#{json_dir_path}/#{entry_name}")
+  contents = file.read
+  data = JSON.parse(contents)
 
-#   data.each do |commit|
-#     all_commits << CommitEntry.new(commit)
-#   end
+  data.each do |commit|
+    all_commits << CommitEntry.new(commit)
+  end
+end
 
 # Class to breakdown and summarize commit data.
 class CommitsBreakdown
@@ -84,7 +83,7 @@ class CommitsBreakdown
   # Initializes the CommitsBreakdown with all commits and processes the data.
   # @param all_commits [Array<CommitEntry>] The list of all commit entries
   def initialize(all_commits)
-    @all_commits=all_commits
+    @all_commits = all_commits
     @hash_of_all_years = Hash.new
     process_all_commits
     sum_all_commits
@@ -97,12 +96,11 @@ class CommitsBreakdown
     total_commits_for_all_years = 0
     hash_of_all_years.each do |key, value|
       puts key
-      commits_for_this_year =  hash_of_all_years[key]['total_commits_this_year']
+        commits_for_this_year =  hash_of_all_years[key]['total_commits_this_year']
       total_commits_for_all_years += commits_for_this_year
     end
-   @total_commits_for_all_years = total_commits_for_all_years
+    @total_commits_for_all_years = total_commits_for_all_years
   end
-
   def yearly_commits_by_author_hash
     @yearly_commits_by_author_hash ||=  Hash.new(0)
   end
@@ -130,28 +128,13 @@ class CommitsBreakdown
   # @param commit_year [Integer] The year of the commit
   # @param commit_author [String] The author of the commit
   def count_commit(commit_year, commit_author)
-      hash_of_all_years[commit_year][commit_author] += 1
-      hash_of_all_years[commit_year]['total_commits_this_year'] += 1
-      puts "#{commit_author} has #{hash_of_all_years[commit_year][commit_author] } commits for #{commit_year}"
+    hash_of_all_years[commit_year][commit_author] += 1
+    hash_of_all_years[commit_year]['total_commits_this_year'] += 1
+    puts "#{commit_author} has #{hash_of_all_years[commit_year][commit_author] } commits for #{commit_year}"
   end
 end
 
-
-
-
-require 'git'
-bitcoin_dir = Dir.new('~/code/bitcoin')
-b = Git.open(
-  bitcoin_dir
-  # ,  log: Logger.new(STDOUT)
-)
-
-all_commits = b.log(:all)
-
-
-
-
-
+# Process and summarize the commit data.
 breakdown = CommitsBreakdown.new(all_commits)
 
 # Output the total commits.
