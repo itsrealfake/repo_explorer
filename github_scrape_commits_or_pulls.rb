@@ -293,16 +293,16 @@ def export_pull_request_author_and_status_to_csv
     github_api_token = args.github_api_token
 	
     # create a CSV file and add the headers
-    csv = CsvHandler.new(output_file_name, [    'pr node_id',
-                                                'pr number',
+    csv = CsvHandler.new(output_file_name, [    'pr_node_id',
+                                                'pr_number',
                                                 'base_label',
                                                 'created_at',
-                                                'pr title',
-                                                'pr is merged?',
+                                                'pr_title',
+                                                'pr_is_merged?',
                                                 'status',
                                                 'closed_at',
                                                 'author',
-                                                'author node_id',
+                                                'author_node_id',
                                                 'author_association',
                                                 'is_draft',
                                                 'is_locked',

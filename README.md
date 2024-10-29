@@ -63,6 +63,7 @@ TODO: These so far:
 
 ## Usage
 
-Toodles
-
+1. you must have a $GITHUB_API_TOKEN env var
+2. delete line 20 (already deleted? line 20 appears commented out)
+2. ruby github_prs.rb bitcoin/bitcoin test-commits.csv 
 
